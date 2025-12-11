@@ -1,0 +1,6 @@
+venv/
+output/frames/
+output/checkpoints/
+__pycache__/
+*.pyc
+*.mp4
