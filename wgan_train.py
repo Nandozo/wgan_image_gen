@@ -506,7 +506,7 @@ def main():
         dataset, 
         batch_size=config.BATCH_SIZE, 
         shuffle=True,
-        num_workers=2,
+        num_workers=0,
         pin_memory=True if device.type == 'cuda' else False
     )
     
