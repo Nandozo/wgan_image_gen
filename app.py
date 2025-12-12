@@ -192,7 +192,7 @@ output/
     st.sidebar.markdown("---")
     page = st.sidebar.radio(
         "Navigation",
-        ["🎲 Generate Images", "🔄 Latent Interpolation", "📊 Training Progress", "⚖️ Real vs Generated"]
+        ["🎲 Generate Images", "🔄 Latent Interpolation", "📊 Training Progress", "⚖️ Real vs Generated", "📓 Notebook"]
     )
     
     st.sidebar.markdown("---")
@@ -401,6 +401,86 @@ output/
                         st.image(img, use_container_width=True)
             else:
                 st.info("Click 'Generate New Batch' to create images")
+
+    # ========================================================================
+    # Page: Notebook
+    # ========================================================================
+    elif page == "📓 Notebook":
+        st.title("📓 Project Notebook")
+        st.markdown("Full technical documentation and implementation details.")
+
+        notebook_path = "RL_image_gen_Notebook.ipynb"
+
+        if not os.path.exists(notebook_path):
+            st.error(f"❌ Notebook not found at `{notebook_path}`")
+            st.info("Please ensure the notebook file is in the project directory.")
+            return
+
+        st.success(f"✅ Notebook found: `{notebook_path}`")
+
+        # Display notebook info
+        st.markdown("---")
+        st.markdown("### 📖 Viewing Options")
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.markdown("**Option 1: Download Notebook**")
+            st.markdown("Download the notebook to view in Jupyter or VS Code.")
+
+            # Read notebook file
+            with open(notebook_path, 'rb') as f:
+                notebook_data = f.read()
+
+            st.download_button(
+                label="📥 Download Notebook (.ipynb)",
+                data=notebook_data,
+                file_name="RL_image_gen_Notebook.ipynb",
+                mime="application/x-ipynb+json",
+                use_container_width=True
+            )
+
+        with col2:
+            st.markdown("**Option 2: View on nbviewer**")
+            st.markdown("Upload the notebook to GitHub and view it using nbviewer.org or GitHub's viewer.")
+            st.markdown("[nbviewer.org](https://nbviewer.org/) - Paste your GitHub notebook URL")
+
+        st.markdown("---")
+        st.markdown("### 📋 Notebook Contents")
+
+        # Show notebook structure
+        try:
+            import json
+            with open(notebook_path, 'r', encoding='utf-8') as f:
+                notebook = json.load(f)
+
+            # Extract markdown headers
+            headers = []
+            for cell in notebook.get('cells', []):
+                if cell.get('cell_type') == 'markdown':
+                    source = ''.join(cell.get('source', []))
+                    lines = source.split('\n')
+                    for line in lines:
+                        if line.startswith('#'):
+                            headers.append(line)
+
+            # Display table of contents
+            st.markdown("**Table of Contents:**")
+            for header in headers[:20]:  # Show first 20 headers
+                # Count # symbols for indentation
+                level = len(header) - len(header.lstrip('#'))
+                title = header.lstrip('#').strip()
+                indent = "  " * (level - 1)
+                st.markdown(f"{indent}- {title}")
+
+            if len(headers) > 20:
+                st.markdown(f"*...and {len(headers) - 20} more sections*")
+
+            st.markdown("---")
+            st.info("💡 **Tip:** Download the notebook above to view the complete implementation with code, equations, and visualizations.")
+
+        except Exception as e:
+            st.warning(f"Could not parse notebook structure: {e}")
 
 
 if __name__ == "__main__":
