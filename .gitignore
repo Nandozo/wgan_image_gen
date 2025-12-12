@@ -1,6 +1,12 @@
 venv/
-output/frames/
 output/checkpoints/
 __pycache__/
 *.pyc
 *.mp4
+
+# Keep only first 10 frames (000000-000009), ignore the rest
+output/frames/frame_0000[1-9][0-9].png
+output/frames/frame_000[1-9]*.png
+output/frames/frame_00[1-9]*.png
+output/frames/frame_0[1-9]*.png
+output/frames/frame_[1-9]*.png

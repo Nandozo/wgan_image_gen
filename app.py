@@ -145,7 +145,7 @@ def load_training_samples(samples_dir: str):
     return sample_files
 
 
-def load_real_frames(frames_dir: str, max_frames: int = 20):
+def load_real_frames(frames_dir: str, max_frames: int = 10):
     """Load real extracted frames for comparison."""
     frame_files = sorted(glob.glob(os.path.join(frames_dir, "*.png")))[:max_frames]
     return frame_files
@@ -372,13 +372,14 @@ output/
             st.markdown("### 📷 Real Frames")
             
             if os.path.exists(frames_dir):
-                real_frames = load_real_frames(frames_dir, max_frames=8)
-                
+                real_frames = load_real_frames(frames_dir, max_frames=10)
+
                 if real_frames:
-                    frame_cols = st.columns(4)
-                    for idx, frame_path in enumerate(real_frames[:8]):
-                        with frame_cols[idx % 4]:
-                            st.image(frame_path, use_container_width=True)
+                    st.info(f"Showing {len(real_frames)} sample frames (max 10)")
+                    frame_cols = st.columns(5)
+                    for idx, frame_path in enumerate(real_frames):
+                        with frame_cols[idx % 5]:
+                            st.image(frame_path, use_container_width=True, caption=f"Frame {idx+1}")
                 else:
                     st.warning("No frames found")
             else:
