@@ -210,7 +210,8 @@ output/
     if page == "🎲 Generate Images":
         st.title("🎲 Generate New Images")
         st.markdown("Generate novel images from random latent vectors.")
-        
+        st.info("💡 **Tip:** Look towards the **top right** and **bottom right** of generated images - that's where most subtle variations appear, as the training video was mostly static footage of the car's front view.")
+
         col1, col2 = st.columns([1, 2])
         
         with col1:
@@ -256,7 +257,8 @@ output/
     elif page == "🔄 Latent Interpolation":
         st.title("🔄 Latent Space Interpolation")
         st.markdown("Smoothly morph between two generated images by interpolating in latent space.")
-        
+        st.info("💡 **Tip:** Watch the **top right** and **bottom right** regions during interpolation - you'll see the most noticeable changes there.")
+
         col1, col2 = st.columns([1, 2])
         
         with col1:
@@ -363,7 +365,8 @@ output/
     elif page == "⚖️ Real vs Generated":
         st.title("⚖️ Real vs Generated Comparison")
         st.markdown("Compare original training frames with generated images.")
-        
+        st.info("💡 **Tip:** Pay attention to the **top right** and **bottom right** corners - these areas show the most variation since the source video was mostly static front-facing car footage.")
+
         frames_dir = "output/frames"
         
         col1, col2 = st.columns(2)
